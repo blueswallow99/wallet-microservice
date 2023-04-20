@@ -6,9 +6,12 @@ import { User } from './user.entity';
 import { Transaction } from './transaction.entity';
 import { WalletService } from './wallet.service';
 import { WalletController } from './wallet.controller';
+import { ScheduleModule } from '@nestjs/schedule';
+import { DailySummaryTask } from './tasks/daily-summary.task';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST || 'db',
@@ -21,6 +24,6 @@ import { WalletController } from './wallet.controller';
     }),
   ],
   controllers: [AppController, WalletController],
-  providers: [AppService, WalletService],
+  providers: [AppService, WalletService, DailySummaryTask],
 })
 export class AppModule {}
